@@ -4,11 +4,12 @@ import VueFire from 'vuefire'
 import VueStripeCheckout from 'vue-stripe-checkout'
 
 const options = {
-  key: 'pk_test_loAPqOiMFuxDx3my2xE3b40D',
-  image: 'https://cdn.meme.am/images/100x100/15882140.jpg',
+  key: 'pk_live_rNrIXxEyBd9tpTLxTw0P4iiA',
+  image: 'https://vosmeeting.com/sponsor/static/img/VOSlogo-small.png',
   locale: 'auto',
   currency: 'PHP',
-  billingAddress: true,
+  billingAddress: false,
+  zipCode: true,
   panelLabel: 'Pay {{amount}}'
 }
 
