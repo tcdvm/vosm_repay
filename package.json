@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "buefy": "^0.6.6",
     "firebase": "^5.0.4",
     "vue": "^2.5.16",
     "vue-stripe-checkout": "^1.0.4",

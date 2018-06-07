@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <div class="spacer1"></div>
+      <!-- <div class="spacer1"></div> -->
 
       <div class="logo">
         <img src="./assets/VOSlogo.png">
@@ -9,20 +9,29 @@
       <div class="info">
         <div v-if="state === 'email' || state === 'notregistered'">
         <!-- <div> -->
-          <p>So, something went wrong when you tried to pay. Let's try again!</p>
+          <p>So, something went wrong when you tried to pay. Let's try again!</p><br/>
           <b>Please enter the email you used to register:</b><br/>
-          <input v-model.trim="email">
-          <input type="button" value="Submit" v-on:click=checkRegistration>
+          <!-- <input v-model.trim="email"> -->
+          <b-field>
+            <b-input placeholder="Email"
+                type="email"
+                icon="email"
+                v-model.trim="email">
+            </b-input>
+          </b-field>
+
+          <input class="button is-light" type="button" value="Submit" v-on:click=checkRegistration>
         </div>
         <div v-if="state === 'registered'">
-          We've found your registration! Please verify the information below. If it looks accurate, please click on the payment link.
+          <p>We've found your registration! Please verify the information below. If it looks accurate, please click on the payment link.</p><br>
           <ul>
           <li>Name: <b>{{this.registrant.name}}</b></li>
           <li>Email: <b>{{this.registrant.email}}</b></li>
           <li>Company: <b>{{this.registrant.company}}</b></li>
           <li>Registration Category: <b>{{this.registrationCategory}}</b></li>
-          </ul>
-          <button @click="checkout">Pay Registration</button>
+          </ul><br>
+          <button class="button is-link" @click="checkout">Pay Registration</button><br>
+
           <p>If there is a mistake in the information above, please email us at <a href="mailto:vetophthosurgerymeeting@gmail.com">vetophthosurgerymeeting@gmail.com</a></p>
 
         </div>
@@ -36,8 +45,8 @@
     <!-- <ul>
       <li v-for="person of attendees" :key="person['.key']">{{person.email}}</li>
     </ul> -->
-    <div class="spacer2"></div>
-    <div class="footer"></div>
+    <!-- <div class="spacer2"></div> -->
+    <!-- <div class="footer"></div> -->
     </div>
   </div>
 </template>
@@ -167,6 +176,7 @@ export default {
 .footer {
   padding: 2.5rem;
   grid-area: footer;
+  background-color: #FFF;
 }
 
 .img {
@@ -178,11 +188,11 @@ export default {
   .container {
     display: grid;
     min-height: 100%;
-    grid-template-columns: 0.75fr 1fr 1fr 0.75fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 100px;
     justify-items: center;
     align-items: center;
-    grid-template-areas: "spacer1 logo info spacer2" "footer footer footer footer";
+    grid-template-areas: "logo info"; 
   }
 
   .info {
