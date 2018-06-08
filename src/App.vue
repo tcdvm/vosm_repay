@@ -6,47 +6,48 @@
       <div class="logo">
         <img src="./assets/VOSlogo.png">
       </div>
-      <div class="info">
-        <div v-if="state === 'email' || state === 'notregistered'">
-        <!-- <div> -->
-          <p>So, something went wrong when you tried to pay. Let's try again!</p><br/>
-          <b>Please enter the email you used to register:</b><br/>
-          <!-- <input v-model.trim="email"> -->
-          <b-field>
-            <b-input placeholder="Email"
-                type="email"
-                icon="email"
-                v-model.trim="email">
-            </b-input>
-          </b-field>
-
-          <input class="button is-light" type="button" value="Submit" v-on:click=checkRegistration>
-        </div>
-        <div v-if="state === 'registered'">
-          <p>We've found your registration! Please verify the information below. If it looks accurate, please click on the payment link.</p><br>
-          <ul>
-          <li>Name: <b>{{this.registrant.name}}</b></li>
-          <li>Email: <b>{{this.registrant.email}}</b></li>
-          <li>Company: <b>{{this.registrant.company}}</b></li>
-          <li>Registration Category: <b>{{this.registrationCategory}}</b></li>
-          </ul><br>
-          <button class="button is-link" @click="checkout">Pay Registration</button><br>
-
-          <p>If there is a mistake in the information above, please email us at <a href="mailto:vetophthosurgerymeeting@gmail.com">vetophthosurgerymeeting@gmail.com</a></p>
-
-        </div>
-        <div v-if="state === 'notregistered'">
-          <p>We have not found your registration using the email above. Please click <a href="https://vosmeeting.com">here</a> to get to the VOSM homepage to register (and pay) or try another email.</p>
-        </div>
-        <div v-if="state === 'paymentcomplete'">
-          <p>Thank you for paying! Please check your email/account to ensure the payment was successfully completely. If it has not, please contact us at <a href="mailto:vetophthosurgerymeeting@gmail.com">vetophthosurgerymeeting@gmail.com</a></p>
-        </div>
+      <div class="info-form">
+        <p>So, something went wrong when you tried to pay. Let's try again!</p><br/>
+        <label class="label">Please enter the email you used to register:</label>
+        <div class="field has-addons">
+            <p class="control has-icons-left is-expanded">
+            <input class="input" type="email" placeholder="Email" v-model.trim="email">
+            <span class="icon is-small is-left">
+              <i class="mdi mdi-email mdi-24px"></i>
+            </span>
+            </p>
+            <div class="control">
+              <a class="button is-info" v-on:click=checkRegistration>Submit</a>
+            </div>
+        </div>       
       </div>
-    <!-- <ul>
-      <li v-for="person of attendees" :key="person['.key']">{{person.email}}</li>
-    </ul> -->
-    <!-- <div class="spacer2"></div> -->
-    <!-- <div class="footer"></div> -->
+      <div class="info-status">
+        <transition name="fade" mode="out-in">
+          <div v-if="state === 'registered'">
+            <p>Registration Found!</p>
+            <ul>
+            <li>Name: <b>{{this.registrant.name}}</b></li>
+            <li>Company: <b>{{this.registrant.company}}</b></li>
+            <li>Registration Category: <b>{{this.registrationCategory}}</b></li>
+            </ul><br>
+
+            <p>If there is a mistake in the information above, please email us at <a href="mailto:vetophthosurgerymeeting@gmail.com">vetophthosurgerymeeting@gmail.com</a>, otherwise click the payment link below:</p>
+          </div>
+          <div v-if="state === 'notregistered'">
+            <p>We have not found your registration using the email above. Please click <a href="https://vosmeeting.com">here</a> to get to the VOSM homepage to register (and pay) or try another email.</p>
+          </div>
+        </transition>
+      </div>
+      <div class="info-payment">
+        <transition name="fade" mode="out-in">
+          <div v-if="state === 'registered'">
+            <button class="button is-link" @click="checkout">Pay Registration</button>
+          </div>
+          <div v-if="state === 'paymentcomplete'">
+            <p>Thank you for paying! Please check your email/account to ensure the payment was successfully completely. If it has not, please contact us at <a href="mailto:vetophthosurgerymeeting@gmail.com">vetophthosurgerymeeting@gmail.com</a></p>
+          </div>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -159,14 +160,9 @@ export default {
   justify-items: center;
   align-items: center;
   grid-template-areas: "logo" 
-                       "info" 
-                       "footer"
-}
-
-.info {
-  grid-area: info;
-  text-align: center;
-  padding: 2rem;
+                       "info-form" 
+                       "info-status" 
+                       "info-payment"
 }
 
 .logo {
@@ -185,14 +181,37 @@ export default {
 }
 
 @media only screen and (min-width: 1100px) {
+
+.info-form {
+  grid-area: info-form;
+  justify-self: start;
+  align-self: end;
+  text-align: left;
+}
+
+.info-status {
+  grid-area: info-status;
+  justify-self: start;
+  /* align-self: end; */
+  text-align: left;
+}
+
+.info-payment {
+  grid-area: info-payment;
+  justify-self: stretch;
+}
+
   .container {
     display: grid;
     min-height: 100%;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 100px;
+    grid-template-rows: 1fr 190px 100px;
     justify-items: center;
     align-items: center;
-    grid-template-areas: "logo info"; 
+    grid-template-areas: 
+                        "logo info-form" 
+                        "logo info-status" 
+                        "logo info-payment"; 
   }
 
   .info {
@@ -200,18 +219,15 @@ export default {
     text-align: left;
     padding: 2rem;
   }
-
-  .spacer1 {
-    grid-area: spacer1;
-  }
-  .spacer2 {
-    grid-area: spacer2;
-  }
-
   img {
     max-width: 90%;
     height: auto;
   }
 }
-
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 10s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

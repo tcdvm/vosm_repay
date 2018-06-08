@@ -2,7 +2,7 @@ module.exports = {
   lintOnSave: true,
   configureWebpack: {
     output: {
-      publicPath: '/repay/'
+      // publicPath: '/repay/'
     }
   }
 };
