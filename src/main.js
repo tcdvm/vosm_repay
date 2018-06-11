@@ -6,6 +6,7 @@ import Buefy from 'buefy';
 import 'buefy/lib/buefy.css';
 
 const options = {
+  // key: 'pk_test_loAPqOiMFuxDx3my2xE3b40D',
   key: 'pk_live_rNrIXxEyBd9tpTLxTw0P4iiA',
   image: 'https://vosmeeting.com/sponsor/static/img/VOSlogo-small.png',
   locale: 'auto',

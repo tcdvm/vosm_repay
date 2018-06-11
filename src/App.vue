@@ -36,15 +36,15 @@
           <div v-if="state === 'notregistered'">
             <p>We have not found your registration using the email above. Please click <a href="https://vosmeeting.com">here</a> to get to the VOSM homepage to register (and pay) or try another email.</p>
           </div>
+          <div v-if="state === 'paymentcomplete'">
+            <p>Thank you for paying! Please check your email/account to ensure the payment was successfully completely. If it has not, please contact us at <a href="mailto:vetophthosurgerymeeting@gmail.com">vetophthosurgerymeeting@gmail.com</a></p>
+          </div>
         </transition>
       </div>
       <div class="info-payment">
         <transition name="fade" mode="out-in">
           <div v-if="state === 'registered'">
             <button class="button is-link" @click="checkout">Pay Registration</button>
-          </div>
-          <div v-if="state === 'paymentcomplete'">
-            <p>Thank you for paying! Please check your email/account to ensure the payment was successfully completely. If it has not, please contact us at <a href="mailto:vetophthosurgerymeeting@gmail.com">vetophthosurgerymeeting@gmail.com</a></p>
           </div>
         </transition>
       </div>
@@ -114,6 +114,7 @@ export default {
         amount: this.checkoutAmt*100,
         token: (token) => {
           console.log('token ->', token);
+          // axios.post('https://vosmeeting.com/vosm_payment_test/charge', {
           axios.post('https://vosmeeting.com/vosm_payment/charge', {
             stripeToken: token.id,
             amount: this.checkoutAmt*100,
